@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Form from "./components/Form/Form";
+import "./App.css";
+import TaskItem from "./components/TaskItem/TaskItem";
 
-function App() {
+export default function App() {
+  const [tasks, setTasks] = useState([
+    { id: 1, value: "eat lunch" },
+    { id: 2, value: "go shopping" },
+  ]);
+  const [inputValue, setInputValue] = useState("");
+
+  const onChange = (e) => {
+    console.log(e.target.value);
+    setInputValue(e.target.value);
+  };
+
+
+  const addTask = () => {
+    const copy = [...tasks]
+    copy.push({id: new Date(), value: inputValue})
+    setTasks(copy)
+  }
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Get things done!</h2>
+      <Form 
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        onChange={onChange}
+        buttonValue="Add task" 
+        placeholder="What is the task today?"
+        onClick={addTask}
+        />
+      
+      {tasks.map((task) => {
+        return <TaskItem key={task.id } task={task} tasks={tasks} setTasks={setTasks} />;
+      })}
     </div>
   );
 }
-
-export default App;
