@@ -56,7 +56,9 @@ export default function TaskItem({ task, tasks, setTasks }) {
       <div className="task_item__icons">
         <AiOutlineEdit onClick={() => setIsEditing(true)} />
         <BsTrash onClick={() => {onDelete(task.id)}} />
+        
       </div>
+
     </div>
   );
 }
